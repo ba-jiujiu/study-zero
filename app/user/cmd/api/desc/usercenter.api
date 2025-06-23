@@ -1,0 +1,43 @@
+syntax = "v1"
+
+info (
+	title:   "user center service"
+	desc:    "User Center Service"
+	author:  "yosora"
+	email:   "weijunzheng929@gmail.com"
+	version: "v1"
+)
+
+import "user/user.api"
+
+// no need jwt
+@server (
+	prefix: usercenter/v1
+	group:  user
+)
+service usercenter {
+	@doc "register"
+	@handler RegisterHandler
+	post /user/register (RegisterReq) returns (RegisterResp)
+
+	@doc "login"
+	@handler LoginHandler
+	post /user/login (LoginReq) returns (TokenResp)
+}
+
+// need jwt
+@server (
+	prefix: usercenter/v1
+	group:  user
+	jwt:    JwtAuth
+)
+service usercenter {
+	@doc "get user info"
+	@handler GetUserHandler
+	get /user/detail (UserInfoReq) returns (UserInfoResp)
+
+	@doc "wechat mini auth"
+	@handler WxMiniAuthHandler
+	post /user/wxMiniAuth (WXMiniAuthReq) returns (TokenResp)
+}
+
