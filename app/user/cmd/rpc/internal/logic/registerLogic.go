@@ -47,7 +47,7 @@ func (l *RegisterLogic) Register(in *usercenter.RegisterReq) (*usercenter.Genera
 		if len(in.Nickname) == 0 {
 			user.Nickname = tool.Krand(8, tool.KC_RAND_KIND_ALL)
 		}
-
+		// wxMiniProgram register does not require password, phone register is require passwd valid in api
 		if len(in.Password) > 0 {
 			user.Password = tool.Md5ByString(in.Password)
 		}
