@@ -2,6 +2,9 @@ package user
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"study-zero/app/user/cmd/rpc/usercenter"
+	"study-zero/pkg/ctxdata"
 
 	"study-zero/app/user/cmd/api/internal/svc"
 	"study-zero/app/user/cmd/api/internal/types"
@@ -25,7 +28,21 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 }
 
 func (l *GetUserLogic) GetUser(req *types.UserInfoReq) (resp *types.UserInfoResp, err error) {
-	// todo: add your logic here and delete this line
+
+	userId := ctxdata.GetUidFromCtx(l.ctx)
+
+	user, err := l.svcCtx.UsercenterRpc.GetUserInfo(l.ctx, &usercenter.GetUserInfoReq{
+		Id: userId,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	var _user types.User
+	_ = copier.Copy(&_user, user)
+
+	resp.UserInfo = _user
 
 	return
 }
