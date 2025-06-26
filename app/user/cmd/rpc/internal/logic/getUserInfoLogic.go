@@ -2,12 +2,15 @@ package logic
 
 import (
 	"context"
+	"study-zero/pkg/xerr"
 
 	"study-zero/app/user/cmd/rpc/internal/svc"
 	"study-zero/app/user/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
+
+var ErrUserNoExist = xerr.NewErrMsg("user not found")
 
 type GetUserInfoLogic struct {
 	ctx    context.Context
