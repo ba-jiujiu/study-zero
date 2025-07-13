@@ -1,0 +1,33 @@
+syntax = "v1"
+
+info (
+	title:   "order service"
+	desc:    "order service"
+	author:  "yosora"
+	version: "v1"
+)
+
+import (
+	"order/order.api"
+)
+
+// need login
+@server (
+	prefix: order/v1
+	group:  HomestayOrder
+	auth:   JwtAuth
+)
+service order {
+	@doc "create homestay order"
+	@handler createHomestayOrder
+	post /homestayOrder/createHomestayOrder (CreateHomestayOrderRequest) returns (CreateHomestayOrderResponse)
+
+	@doc "user homestay order list"
+	@handler userHomestayOrderList
+	post /homestayOrder/userHomestayOrderList (UserHomestayOrderListRequest) returns (UserHomestayOrderListResponse)
+
+	@doc "user homestay order detail"
+	@handler userHomestayOrderDetail
+	post /homestayOrder/userHomestayOrderDetail (UserHomestayOrderDetailRequest) returns (UserHomestayOrderDetailResponse)
+}
+

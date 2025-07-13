@@ -1,0 +1,82 @@
+syntax = "v1"
+
+info (
+	title:   "order service"
+	desc:    "order service"
+	author:  "yosora"
+	version: "v1"
+)
+
+type (
+	CreateHomestayOrderRequest {
+		HomestayId      int64  `json:"homestayId"`
+		IsFood          bool   `json:"isFood"`
+		LiveStartTime   string `json:"liveStartTime"`
+		LiveEndTime     string `json:"liveEndTime"`
+		LivePeopleCount int64  `json:"livePeopleCount"`
+		Remark          string `json:"remark"`
+	}
+	CreateHomestayOrderResponse {
+		OrderSn string `json:"orderSn"`
+	}
+)
+
+type (
+	UserHomestayOrderListView {
+		Sn              string `json:"sn"`
+		Cover           string `json:"cover"`
+		Title           string `json:"title"`
+		SubTitle        string `json:"subTitle"`
+		TradeCode       string `json:"tradeCode"`
+		CreateTime      int64  `json:"createTime"`
+		TradeState      string `json:"tradeState"`
+		HomestayId      int64  `json:"homestayId"`
+		LiveEndDate     int64  `json:"liveEndDate"`
+		LiveStartDate   int64  `json:"liveStartDate"`
+		OrderTotalPrice string `json:"orderTotalPrice"`
+	}
+	UserHomestayOrderListRequest {
+		Page       int64  `json:"page"`
+		PageSize   int64  `json:"pageSize"`
+		TradeState string `json:"tradeState"`
+	}
+	UserHomestayOrderListResponse {
+		List []UserHomestayOrderListView `json:"list"`
+	}
+)
+
+type (
+	UserHomestayOrderDetailRequest {
+		Sn string `json:"sn"`
+	}
+	UserHomestayOrderDetailResponse {
+		Sn                 string  `json:"sn"`
+		UserId             int64   `json:"userId"`
+		HomestayId         int64   `json:"homestayId"`
+		Title              string  `json:"title"`
+		SubTitle           string  `json:"subTitle"`
+		Cover              string  `json:"cover"`
+		Info               string  `json:"info"`
+		FoodInfo           string  `json:"foodInfo"`
+		FoodPrice          float64 `json:"foodPrice"`
+		HomestayPrice      float64 `json:"homestayPrice"`
+		MarkHomestayPrice  float64 `json:"markHomestayPrice"`
+		HomestayBusinessId int64   `json:"homestayBusinessId"` // business ID
+		HomestayUserId     int64   `json:"homestayUserId"` // user ID of the homestay owner
+		OrderTotalPrice    float64 `json:"orderTotalPrice"` // total price of the order
+		CreateTime         int64   `json:"createTime"` // order creation time
+		TradeState         string  `json:"tradeState"` // -1: cancelled, 0: pending payment, 1: paid, 2: completed
+		LiveStartDate      int64   `json:"liveStartDate"` // start date of the stay
+		LiveEndDate        int64   `json:"liveEndDate"` // end date of the stay
+		TradeCode          string  `json:"tradeCode"` // trade code for the order
+		FoodTotalPrice     float64 `json:"foodTotalPrice"` // total price of food
+		HomestayTotalPrice float64 `json:"homestayTotalPrice"` // total price of the homestay
+		Remark             string  `json:"remark"` // user remark for the order
+		LivePeopleCount    int64   `json:"livePeopleCount"` // number of people staying
+		NeedFood           bool    `json:"needFood"` // whether food is needed
+		// payment information
+		PayTime int64  `json:"payTime"` // time of payment
+		PayType string `json:"payType"` // type of payment
+	}
+)
+

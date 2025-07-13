@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./pb";
+
+message HomestayOrder {
+  int64 id = 1;
+  string sn = 2;
+  int64 user_id = 3;
+  int64 homestay_id = 4;
+  string title = 5;
+  string sub_title = 6;
+  string cover = 7;
+  string info = 8;
+  int64 people_num = 9;
+  int64 row_type = 10;
+  string food_info = 11;
+  int64 food_price = 12;
+  int64 homestay_price = 13;
+  int64 market_homestay_price = 14;
+  int64 homestay_business_id = 15;
+  int64 homestay_user_id = 16;
+  int64 live_start_date = 17;
+  int64 live_end_date = 18;
+  int64 live_people_num = 19;
+  int64 trade_state = 20;
+  string trade_code = 21;
+  string remark = 22;
+  int64 order_total_price = 23;
+  int64 food_total_price = 24;
+  int64 homestay_total_price = 25;
+  int64 create_time = 26;
+  int64 need_food = 27;
+}
+
+message CreateHomestayOrderRequest {
+  int64 homestay_id = 1;
+  bool is_food = 2;
+  int64 live_start_date = 3;
+  int64 live_end_date = 4;
+  int64 user_id = 5;
+  int64 live_people_count = 6;
+  string remark = 7;
+}
+
+message CreateHomestayOrderResponse {
+  string sn = 1;
+}
+
+message HomestayOrderDetailRequest {
+  string sn = 1;
+}
+
+message HomestayOrderDetailResponse {
+  HomestayOrder homestay_order = 1;
+}
+
+message UpdateHomestayOrderTradeStateRequest {
+  string sn = 1;
+  int64 trade_state = 2;
+}
+
+message UpdateHomestayOrderTradeStateResponse {
+  int64 id = 1;
+  int64 user_id = 2;
+  string sn = 3;
+  string trade_code = 4;
+  int64 live_start_date = 5;
+  int64 live_end_date = 6;
+  int64 order_total_price = 7;
+  string title = 8;
+}
+
+message UserHomestayOrderListRequest {
+  int64 last_id = 1;
+  int64 page_size = 2;
+  int64 user_id = 3;
+  int64 trade_state = 4;
+}
+
+message UserHomestayOrderListResponse {
+  repeated HomestayOrder homestay_orders = 1;
+}
+
+service OrderService {
+  // create homestay order
+  rpc CreateHomestayOrder(CreateHomestayOrderRequest) returns (CreateHomestayOrderResponse);
+  // homestay order detail
+  rpc HomestayOrderDetail(HomestayOrderDetailRequest) returns (HomestayOrderDetailResponse);
+  // update homestay order trade state
+  rpc UpdateHomestayOrderTradeState(UpdateHomestayOrderTradeStateRequest) returns (UpdateHomestayOrderTradeStateResponse);
+  // user homestay order list
+  rpc UserHomestayOrderList(UserHomestayOrderListRequest) returns (UserHomestayOrderListResponse);
+}
